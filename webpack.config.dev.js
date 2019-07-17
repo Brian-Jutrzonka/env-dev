@@ -1,31 +1,8 @@
 import path from 'path';
 
-
-// module.exports = {
-//   debug: true,
-//   devtool: 'inline-source-map',
-//   noInfo: false,
-//   entry: path.resolve(__dirname, 'src/index'),
-//   target: 'web',  
-//   output: {
-//     path: path.resolve(__dirname, 'src'),
-//     publicPath: '/',    
-//     filename: "bundle.js"
-//   },
-//   module: {
-//       rules: [{
-//           test: /\.scss$/,
-//           use: [
-//             "style-loader",
-//             "sass-loader"
-//           ]
-//       }]
-//   }  
-// }
-
 export default {
   debug: true,
-  devtool: 'inline-source-map',
+  devtool: 'source-map', 
   noInfo: false,
   entry: [
     path.resolve(__dirname, 'src/index')
@@ -36,11 +13,20 @@ export default {
     publicPath: '/',
     filename: 'bundle.js'
   },
-  plugins: [],
   module: {
     loaders: [
-      {test: /\.js$/, exclude: /node_modules/, loaders: ['babel']},
-      {test: /\.css$/, loaders: ['style','css']}
+      {
+          test: /\.js$/,
+          exclude: /(node_modules|bower_components)/,
+          loader: 'babel',
+          query: {
+              presets: ['react', 'es2015']
+          }
+      },
+      {
+          test: /\.scss$/,
+          loaders: ['style', 'css', 'sass']
+      } 
     ]
   }
 }
